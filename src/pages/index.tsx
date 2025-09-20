@@ -2,7 +2,6 @@ import { useState, useEffect, FormEvent } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
-// Defines the structure of a bot object
 interface Bot {
   uid: string;
   name: string;
@@ -16,12 +15,12 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // --- NEW --- State to manage which bot is currently being edited
+  // State to manage which bot is currently being edited
   const [editingBot, setEditingBot] = useState<Bot | null>(null);
   const [editedName, setEditedName] = useState("");
   const [editedPrompt, setEditedPrompt] = useState("");
 
-  // Fetches the list of all bots from your backend API
+  // Fetches the list of all bots from backend API
   const fetchBots = async () => {
     try {
       setLoading(true);
@@ -60,20 +59,20 @@ export default function HomePage() {
       });
       setBotName("");
       setBotPrompt("");
-      fetchBots(); // Refresh the bot list
+      fetchBots();
     } catch (err: any) {
       setError(err.message);
     }
   };
 
-  // --- NEW --- Function to start the editing process for a specific bot
+  // Function to start the editing process for a specific bot
   const handleEditClick = (bot: Bot) => {
     setEditingBot(bot);
     setEditedName(bot.name);
     setEditedPrompt(bot.prompt);
   };
 
-  // --- NEW --- Function to save the updated bot details
+  // Function to save the updated bot details
   const handleSaveUpdate = async (botId: string) => {
     if (!editedName || !editedPrompt) return;
     try {
@@ -82,8 +81,8 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ botId, name: editedName, prompt: editedPrompt }),
       });
-      setEditingBot(null); // Exit editing mode
-      fetchBots(); // Refresh the bot list
+      setEditingBot(null); 
+      fetchBots();
     } catch (err: any) {
       setError(err.message);
     }
@@ -98,7 +97,7 @@ export default function HomePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ botId }),
       });
-      fetchBots(); // Refresh the bot list
+      fetchBots();
     } catch (err: any) {
       setError(err.message);
     }
@@ -170,7 +169,6 @@ export default function HomePage() {
             {bots.map((bot) => (
               <div key={bot.uid} className="p-4 bg-gray-700 rounded-lg">
                 {editingBot?.uid === bot.uid ? (
-                  // --- NEW: EDITING VIEW ---
                   // This form appears when a user clicks "Edit"
                   <div className="space-y-4">
                     <div>

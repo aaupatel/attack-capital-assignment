@@ -75,7 +75,7 @@ export default function LogsPage() {
                 <h3 className="font-semibold text-lg mb-2">Transcript:</h3>
                 <div className="p-4 bg-gray-900 rounded-md space-y-2">
                   {log.transcript.map((item, index) => {
-                    // --- FINAL FIX: Accessing data using array indices ---
+                    // Accessing data using array indices ---
                     const role = item[0];
                     const content = item[1];
 
